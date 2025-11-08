@@ -3,14 +3,14 @@ import { connectToDB } from "../../db";
 import { ObjectId } from "mongodb";
 import { getVerifiedUserIdTokenUtil } from "@/util/getVerifiedUserIdTokenUtil";
 
-export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const { uid } = verifiedUserIdToken;
-    const { id } = params;
+    const { id } = await params;
 
     try {
         const db = await connectToDB();
@@ -27,14 +27,14 @@ export const GET = async (request: NextRequest, { params }: { params: { id: stri
     }
 }
 
-export const PATCH = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const PATCH = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     try {
         const body = await request.json();
@@ -76,13 +76,13 @@ export const PATCH = async (request: NextRequest, { params }: { params: { id: st
     }
 }
 
-export const DELETE = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const DELETE = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     try {
         const db = await connectToDB();
