@@ -20,7 +20,6 @@ export default function Home() {
   const toastContext = useContext(ToastContext);
 
   const [metricsLoading, setMetricsLoading] = useState<boolean>(true);
-
   const [totalSales, setTotalSales] = useState<number>(0);
   const [totalStock, setTotalStock] = useState<number>(0);
   const [totalUniqueProducts, setTotalUniqueProducts] = useState<number>(0);
@@ -38,10 +37,10 @@ export default function Home() {
           const totalSales = await getTotalSalesUtil(userIdToken);
           setTotalSales(totalSales ?? 0);
 
-          const totalStock = await getTotalStockUtil(userIdToken); //not complete
+          const totalStock = await getTotalStockUtil(userIdToken);
           setTotalStock(totalStock ?? 0);
 
-          const totalUniqueProducts = await getTotalUniqueProductsUtil(userIdToken);//not complete
+          const totalUniqueProducts = await getTotalUniqueProductsUtil(userIdToken);
           setTotalUniqueProducts(totalUniqueProducts ?? []);
 
           const topCategorySales = await getTopCategorySalesUtil(userIdToken);
@@ -76,6 +75,5 @@ export default function Home() {
         />
       }
     </>
-
   );
 }

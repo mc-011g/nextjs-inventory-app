@@ -5,6 +5,7 @@ import { getVerifiedUserIdTokenUtil } from "@/util/getVerifiedUserIdTokenUtil";
 export const GET = async (request: NextRequest) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+    
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

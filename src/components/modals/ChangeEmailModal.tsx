@@ -73,12 +73,12 @@ export const ChangeEmailModal = ({ closeModal }: { closeModal: () => void }) => 
 
     return (
         <Modal title="Update Email" closeModal={closeModal}>
-            <form className="flex flex-col gap-4 text-gray-600 justify-between h-full" onSubmit={e => { e.preventDefault(); handleUpdateEmail() }}>
+            <form className="flex flex-col gap-4 text-gray-950 justify-between h-full" onSubmit={e => { e.preventDefault(); handleUpdateEmail() }}>
 
                 <div className="flex flex-col gap-4">
                     <label className="flex flex-col">
                         Enter New Email
-                        <input required maxLength={80} type="email" placeholder="email@email.com" className="rounded bg-gray-200 py-2 px-4" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input required maxLength={80} type="email" placeholder="email@email.com" className="rounded bg-gray-200 py-2 px-4 w-full" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </label>
                 </div>
 
@@ -86,18 +86,18 @@ export const ChangeEmailModal = ({ closeModal }: { closeModal: () => void }) => 
                     <div className="text-red-600">{error}</div>
                 }
 
-                <div className="flex justify-end gap-4">
-                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-400 hover:text-gray-700 cursor-pointer" onClick={closeModal}>
+                <div className="flex sm:flex-row flex-col justify-end gap-4">
+                    <button type="button" className="bg-gray-300 p-2 rounded sm:w-fit w-full hover:bg-gray-200 cursor-pointer transition" onClick={closeModal}>
                         Cancel
                     </button>
 
-                    <button type="submit" className="bg-green-300 p-2 rounded hover:bg-green-400 hover:text-gray-700 cursor-pointer inline-flex gap-2 items-center">
+                    <button type="submit" disabled={isLoading} className="bg-green-800 text-green-50 p-2 sm:w-fit w-full rounded hover:bg-green-700 cursor-pointer inline-flex gap-2 items-center transition">
                         {isLoading &&
-                            <div className=" size-5 animate-spin
+                            <div className="min-w-4 min-h-4 animate-spin
                          border-l-2 border-b-2 border-r-2 border-r-green-50 border-t-green-50 border-t-2
-                          rounded-full border-l-green-300 border-t-green-50 border-b-green-300/50"></div>
+                          rounded-full border-l-green-300/50 border-t-green-50 border-b-green-300/50"></div>
                         }
-                        Submit
+                        <span className="w-full">Submit</span>
                     </button>
                 </div>
             </form>

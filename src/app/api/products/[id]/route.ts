@@ -6,9 +6,11 @@ import { getVerifiedUserIdTokenUtil } from "@/util/getVerifiedUserIdTokenUtil";
 export const GET = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
     const { uid } = verifiedUserIdToken;
     const { id } = await params;
 
@@ -17,19 +19,20 @@ export const GET = async (request: NextRequest, { params }: { params: Promise<{ 
         const result = await db.collection("products").findOne({ _id: new ObjectId(id), userId: uid });
 
         if (!result) {
-            return NextResponse.json({ error: "Failed to get product " }, { status: 400 });
+            return NextResponse.json({ error: "Failed to get product." }, { status: 400 });
         }
 
         return NextResponse.json(result, { status: 200 });
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: "Failed to get product " }, { status: 500 });
+        return NextResponse.json({ error: "Failed to get product." }, { status: 500 });
     }
 }
 
 export const PATCH = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -77,7 +80,9 @@ export const PATCH = async (request: NextRequest, { params }: { params: Promise<
 }
 
 export const DELETE = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
+
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+    
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

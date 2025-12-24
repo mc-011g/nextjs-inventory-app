@@ -5,6 +5,7 @@ import { getVerifiedUserIdTokenUtil } from "@/util/getVerifiedUserIdTokenUtil";
 export const GET = async (request: NextRequest) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -15,7 +16,7 @@ export const GET = async (request: NextRequest) => {
         const userFoundResult = await db.collection("users").findOne({ firebaseUID: uid });
 
         if (!userFoundResult) {
-            return NextResponse.json({ error: "Failed to get user profile data. " }, { status: 400 });
+            return NextResponse.json({ error: "Failed to get user profile data." }, { status: 400 });
         }
 
         return NextResponse.json(userFoundResult, { status: 201 });
@@ -29,9 +30,11 @@ export const GET = async (request: NextRequest) => {
 export const PATCH = async (request: NextRequest) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
     const { uid } = verifiedUserIdToken;
 
     try {

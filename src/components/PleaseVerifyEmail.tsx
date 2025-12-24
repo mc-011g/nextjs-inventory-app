@@ -11,7 +11,7 @@ export const PleaseVerifyEmail = ({ error, handleGoToLogin }: { error: string | 
                 <p className="text-gray-800">Check your inbox for a link to verify your email.</p>
             }
 
-            <button onClick={() => handleGoToLogin()} type="button" className="w-fit self-center cursor-pointer bg-blue-600 text-blue-50 p-2 transition hover:bg-blue-500 rounded">Go to Login</button>
+            <button onClick={() => handleGoToLogin()} type="button" className="w-fit self-center cursor-pointer bg-green-800 text-green-50 p-2 transition hover:bg-green-700 rounded">Go to Login</button>
         </div>
     );
 }

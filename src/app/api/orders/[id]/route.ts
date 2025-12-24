@@ -5,10 +5,13 @@ import { Order, OrderItem } from "@/types";
 import { getVerifiedUserIdTokenUtil } from "@/util/getVerifiedUserIdTokenUtil";
 
 export const GET = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
+
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
     const { uid } = verifiedUserIdToken;
     const { id } = await params;
 
@@ -31,9 +34,11 @@ export const GET = async (request: NextRequest, { params }: { params: Promise<{ 
 export const PATCH = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
     const { uid } = verifiedUserIdToken;
     const { id } = await params;
 
@@ -82,6 +87,7 @@ export const PATCH = async (request: NextRequest, { params }: { params: Promise<
 
                 const reducedStockPromiseResults = await Promise.all(reduceQuantityPromises);
                 const failedReducedStockResult = (reducedStockPromiseResults).find(result => !result?._id);
+
                 if (failedReducedStockResult) {
                     return NextResponse.json({ error: "Failed to reduce stock on product." }, { status: 400 });
                 }
@@ -110,10 +116,13 @@ export const PATCH = async (request: NextRequest, { params }: { params: Promise<
 }
 
 export const DELETE = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
+
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    
     const { uid } = verifiedUserIdToken;
     const { id } = await params;
 

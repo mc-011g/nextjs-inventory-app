@@ -29,11 +29,11 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <>
-            {!notProtectedPageCheck &&
+        <div className="flex h-[100vh] w-[100vw] overflow-hidden">
+            {(!notProtectedPageCheck) &&
                 <VerticalNavbar />
             }
             {children}
-        </>
+        </div>
     );
 }

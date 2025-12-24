@@ -25,22 +25,24 @@ export default function DashboardPage(
 
     <PageContainer title="Dashboard">
 
-      <div className="flex flex-wrap gap-4 grow">
-        <div className="bg-gray-200 p-3 rounded h-fit grow">
-          <p className="text-gray-600">Total Sales</p>
-          <p className="text-3xl mt-2 text-gray-800 font-bold">{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(totalSales)}</p>
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 w-full h-fit border-gray-300">
+        <div className="bg-white p-3 rounded h-fit p-4 sm:p-6 border border-gray-300">
+          <p className="text-gray-800">Total Sales</p>
+          <p className="text-3xl sm:text-4xl mt-2 text-gray-800 font-bold">{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(totalSales)}</p>
         </div>
-        <div className="bg-gray-200 p-3 rounded h-fit grow">
-          <p className="text-gray-600">Total Unique Products</p>
-          <p className="text-3xl mt-2 text-gray-800 font-bold">{totalUniqueProducts}</p>
+
+        <div className="bg-white p-3 rounded h-fit p-4 sm:p-6 border border-gray-300">
+          <p className="text-gray-800">Total Unique Products</p>
+          <p className="text-3xl sm:text-4xl mt-2 text-gray-800 font-bold">{totalUniqueProducts}</p>
         </div>
-        <div className="bg-gray-200 p-3 rounded h-fit grow">
-          <p className="text-gray-600">Total Stock</p>
-          <p className="text-3xl mt-2 text-gray-800 font-bold">{totalStock}</p>
+
+        <div className="bg-white p-3 rounded h-fit p-4 sm:p-6 border border-gray-300">
+          <p className="text-gray-800">Total Stock</p>
+          <p className="text-3xl sm:text-4xl mt-2 text-gray-800 font-bold">{totalStock}</p>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 grow">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full h-full">
         <TopCategorySales topCategorySales={topCategorySales} />
         <LowStockProducts lowStockProducts={lowStockProducts} />
         <RecentOrders recentOrders={recentOrders} />

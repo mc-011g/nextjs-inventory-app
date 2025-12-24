@@ -1,6 +1,5 @@
 'use client'
 
-import Image from "next/image"
 import { Category, Product } from "@/types"
 import { useContext, useState } from "react"
 import PageContainer from "../PageContainer"
@@ -195,12 +194,12 @@ export const ProductsPage = ({ initialProducts, categories }: { categories: Cate
             {categories.length > 0 ?
                 <>
                     {products.length > 0 ?
-                        <div className="bg-gray-100 rounded w-full p-8 h-full flex flex-col">
-
-                            <div className="flex justify-between mb-4 items-center">
-                                <p className="text-gray-600"><span className="font-bold">{products.length}</span> Total Products</p>
-                                <button className="cursor-pointer bg-green-200 text-gray-600 p-2 rounded flex flex-row transition hover:bg-green-300 hover:text-gray-700" onClick={() => setModal({ type: 1 })}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                        <div className="bg-white rounded w-full p-6 h-full flex flex-col text-gray-950 border border-gray-300">
+                            <div className="flex justify-between mb-4 sm:items-center sm:flex-row flex-col gap-4 items-start">
+                                <p className="text-gray-800 text-2xl"><span className="font-bold">{products.length}</span> Total Products</p>
+                                
+                                <button type="button" className="cursor-pointer outline outline-green-800 text-green-800 p-2 rounded flex flex-row transition hover:bg-green-800 hover:text-green-50 focus:text-green-50 focus:bg-green-800 " onClick={() => setModal({ type: 1 })}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6" aria-label="A plus icon">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                     </svg>
                                     Create Product
@@ -208,173 +207,184 @@ export const ProductsPage = ({ initialProducts, categories }: { categories: Cate
                             </div>
 
                             <div className="overflow-auto flex-1">
-                                <table className="table-auto w-full text-left min-w-[768px] text-gray-700">
+                                <table className="table-auto w-full text-left min-w-[768px] text-gray-950">
+                                    
                                     <thead>
-                                        <tr className="border-b-1 border-gray-300 font-bold text-gray-600 sticky top-0 bg-gray-100 p-2 z-3">
-                                            <th className="p-2 cursor-pointer" onClick={() => handleSortProductsByType("id")}>
-                                                <span className="inline-flex gap-2 items-center">
+                                        <tr className="border-b-1 border-gray-300 font-bold sticky top-0 p-2 z-3">                                            
+                                            <th className="p-2">                                              
+                                                <button type="button" className="inline-flex gap-2 items-center hover:cursor-pointer" onClick={() => handleSortProductsByType("id")}>
                                                     Id
                                                     {(idSortOrder === "Ascending" || idSortOrder === null) ?
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing up">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                                         </svg>
                                                         :
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing down">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                         </svg>
                                                     }
-                                                </span>
+                                                </button>                                            
                                             </th>
+
                                             <th>Image</th>
-                                            <th className="p-2 cursor-pointer" onClick={() => handleSortProductsByType("name")}>
-                                                <span className="inline-flex gap-2 items-center">
+
+                                            <th className="p-2">                                               
+                                                <button type="button" className="inline-flex gap-2 items-center" onClick={() => handleSortProductsByType("name")}>
                                                     Name
                                                     {(nameSortOrder === "Ascending" || nameSortOrder === null) ?
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing up">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                                         </svg>
                                                         :
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing down">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                         </svg>
                                                     }
-                                                </span>
+                                                </button>
                                             </th>
-                                            <th className="p-2 cursor-pointer" onClick={() => handleSortProductsByType("price")}>
-                                                <span className="inline-flex gap-2 items-center">
+
+                                            <th className="p-2">
+                                                <button type="button" className="inline-flex gap-2 items-center" onClick={() => handleSortProductsByType("price")}>
                                                     Price
                                                     {(priceSortOrder === "Ascending" || priceSortOrder === null) ?
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing up">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                                         </svg>
                                                         :
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing down">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                         </svg>
                                                     }
-                                                </span>
+                                                </button>
                                             </th>
-                                            <th className="p-2 cursor-pointer" onClick={() => handleSortProductsByType("quantity")}>
-                                                <span className="inline-flex gap-2 items-center">
+
+                                            <th className="p-2">
+                                                <button type="button" className="inline-flex gap-2 items-center" onClick={() => handleSortProductsByType("quantity")}>
                                                     Quantity
                                                     {(quantitySortOrder === "Ascending" || quantitySortOrder === null) ?
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing up">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                                         </svg>
                                                         :
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing down">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                         </svg>
                                                     }
-                                                </span>
+                                                </button>
                                             </th>
-                                            <th className="p-2 cursor-pointer" onClick={() => handleSortProductsByType("categoryName")}>
-                                                <span className="inline-flex gap-2 items-center">
+
+                                            <th className="p-2">
+                                                <button type="button" className="inline-flex gap-2 items-center" onClick={() => handleSortProductsByType("categoryName")}>
                                                     Category
                                                     {(categoryNameSortOrder === "Ascending" || categoryNameSortOrder === null) ?
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing up">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                                         </svg>
                                                         :
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing down">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                         </svg>
                                                     }
-                                                </span>
+                                                </button>
                                             </th>
-                                            <th className="p-2 cursor-pointer" onClick={() => handleSortProductsByType("SKU")}>
-                                                <span className="inline-flex gap-2 items-center">
+
+                                            <th className="p-2">
+                                                <button type="button" className="inline-flex gap-2 items-center" onClick={() => handleSortProductsByType("SKU")}>
                                                     SKU
                                                     {(SKUSortOrder === "Ascending" || SKUSortOrder === null) ?
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing up">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                                         </svg>
                                                         :
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing down">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                         </svg>
                                                     }
-                                                </span>
+                                                </button>
                                             </th>
-                                            <th className="p-2 cursor-pointer" onClick={() => handleSortProductsByType("dateAdded")}>
-                                                <span className="inline-flex gap-2 items-center">
+
+                                            <th className="p-2">
+                                                <button type="button" className="inline-flex gap-2 items-center" onClick={() => handleSortProductsByType("dateAdded")}>
                                                     Date Added
                                                     {(dateAddedSortOrder === "Ascending" || dateAddedSortOrder === null) ?
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing up">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                                         </svg>
                                                         :
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing down">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                         </svg>
                                                     }
-                                                </span>
+                                                </button>
                                             </th>
-                                            <th className="p-2 cursor-pointer" onClick={() => handleSortProductsByType("lastUpdated")}>
-                                                <span className="inline-flex gap-2 items-center">
+
+                                            <th className="p-2">
+                                                <button type="button" className="inline-flex gap-2 items-center" onClick={() => handleSortProductsByType("lastUpdated")}>
                                                     Last Updated
                                                     {(lastUpdatedSortOrder === "Ascending" || lastUpdatedSortOrder === null) ?
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing up">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" />
                                                         </svg>
                                                         :
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-4 min-w-4 min-h-4" aria-label="An icon with an arrow pointing down">
                                                             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
                                                         </svg>
                                                     }
-                                                </span>
+                                                </button>
                                             </th>
                                             <th>Options</th>
+
                                         </tr>
                                     </thead>
+
                                     <tbody className="overflow-auto">
                                         {products.map(product =>
-                                            <tr className="border-b-1 border-gray-300 hover:bg-gray-200" key={product._id}>
-                                                <td className="p-2">
+                                            <tr className="border-b-1 border-gray-300 hover:bg-gray-100" key={product._id}>
+                                                <td className="px-2 py-3">
                                                     {product._id}
                                                 </td>
-                                                <td>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="min-w-10 min-h-10 max-h-10 max-w-10">
+                                                <td className="px-2 py-3">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="min-w-10 min-h-10 max-h-10 max-w-10" aria-label="An icon of an image">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                                                     </svg>
                                                 </td>
-                                                <td>
+                                                <td className="px-2 py-3">
                                                     {product.name}
                                                 </td>
-                                                <td>
+                                                <td className="px-2 py-3">
                                                     {product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
                                                 </td>
-                                                <td>
+                                                <td className="px-2 py-3">
                                                     {product.quantity}
                                                 </td>
-                                                <td>
+                                                <td className="px-2 py-3">
                                                     {product.categoryName}
                                                 </td>
-                                                <td>
+                                                <td className="px-2 py-3">
                                                     {product.sku}
                                                 </td>
-                                                <td>
+                                                <td className="px-2 py-3">
                                                     {product.dateAdded?.toLocaleString()}
                                                 </td>
-                                                <td>
+                                                <td className="px-2 py-3">
                                                     {product.lastUpdated?.toLocaleString()}
                                                 </td>
-                                                <td className="relative">
+                                                <td className="relative px-2 py-3">
                                                     {dropdown && dropdown?.id === product._id ?
                                                         <div className="relative" ref={dropdownRef}>
-                                                            <button className="flex cursor-pointer hover:bg-gray-300 rounded transition p-1" onClick={() => handleShowDropdown?.(product._id as string)}>
-                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                            <button type="button" className="flex cursor-pointer hover:bg-gray-300 rounded transition p-1" onClick={() => handleShowDropdown?.(product._id as string)}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6" aria-label="An icon for options with 3 vertical dots">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                                                                 </svg>
                                                             </button>
-                                                            <div className="flex flex-col absolute z-2 border rounded border-gray-400 bg-gray-100 right-full top-0">
-                                                                <button className="text-left cursor-pointer hover:bg-gray-200 py-2 px-4" onClick={() => { setModal({ type: 2 }); setSelectedProduct(product); handleCloseDropdown?.() }}>Edit</button>
-                                                                <button className="text-left cursor-pointer hover:bg-gray-200 py-2 px-4" onClick={() => { setModal({ type: 3 }); setSelectedProduct(product); handleCloseDropdown?.() }}>Delete</button>
+                                                            <div className="flex flex-col absolute z-2 border rounded border-gray-400 bg-white right-full top-0">
+                                                                <button type="button" className="text-left cursor-pointer hover:bg-gray-200 py-2 px-4" onClick={() => { setModal({ type: 2 }); setSelectedProduct(product); handleCloseDropdown?.() }}>Edit</button>
+                                                                <button type="button" className="text-left cursor-pointer hover:bg-gray-200 py-2 px-4" onClick={() => { setModal({ type: 3 }); setSelectedProduct(product); handleCloseDropdown?.() }}>Delete</button>
                                                             </div>
                                                         </div>
                                                         :
-                                                        <button className="flex cursor-pointer hover:bg-gray-300 rounded transition p-1" onClick={() => handleShowDropdown?.(product._id as string)}>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                                        <button type="button" className="flex cursor-pointer hover:bg-gray-300 rounded transition p-1" onClick={() => handleShowDropdown?.(product._id as string)}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6" aria-label="An icon for options with 3 vertical dots">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
                                                             </svg>
                                                         </button>
@@ -388,19 +398,19 @@ export const ProductsPage = ({ initialProducts, categories }: { categories: Cate
                         </div>
                         :
                         <div className="w-screen h-screen absolute top-0 left-0 pl-[170px] flex flex-col justify-center w-full items-center text-center z-1 ">
-                            <button className="bg-green-400 p-2 text-green-50 rounded hover:bg-green-500 transition cursor-pointer flex gap-4" onClick={() => { setModal({ type: 1 }) }}>
+                            <button className="cursor-pointer outline outline-green-800 text-green-800 p-2 rounded flex flex-row transition hover:bg-green-800 hover:text-green-50" onClick={() => setModal({ type: 1 })}>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                                 </svg>
-                                <p>Create Product</p>
+                                Create Product
                             </button>
                         </div>
                     }
                 </>
                 :
                 <div className="w-screen h-screen absolute top-0 left-0 pl-[170px] flex flex-col justify-center w-full items-center text-center z-1">
-                    <p className="text-3xl text-gray-500 mb-4">Create a category first</p>
-                    <Link href="/categories" className="bg-green-400 p-2 text-green-50 rounded hover:bg-green-500 transition">Go to Categories</Link>
+                    <p className="text-3xl mb-4">Create a category first</p>
+                    <Link href="/categories" className="bg-green-800 p-2 text-green-50 rounded hover:bg-green-700 transition">Go to Categories</Link>
                 </div>
             }
 
@@ -418,7 +428,6 @@ export const ProductsPage = ({ initialProducts, categories }: { categories: Cate
                 modal?.type === 3 && selectedProduct && selectedProduct._id &&
                 <DeleteProductModal productId={selectedProduct?._id} productName={selectedProduct?.name} handleRemoveProduct={handleRemoveProduct} closeModal={() => setModal(null)} />
             }
-
         </PageContainer >
     )
 }

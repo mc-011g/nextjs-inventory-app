@@ -41,8 +41,7 @@ export default function Register() {
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
-                    setError(errorMessage);
-                    toastContext?.handleShowToast("error", "Failed to create user.");
+                    setError(error.code === "auth/email-already-in-use" ? "Failed to register account. An account with this email already exists." : "Error creating account.");
                 });
         }
     }
@@ -66,7 +65,7 @@ export default function Register() {
             .then((result) => {
                 const user = result.user;
 
-                const createUser = async () => {          
+                const createUser = async () => {
                     await createUserUtil({
                         firebaseUID: user.uid,
                         email: user.email as string,
@@ -86,50 +85,54 @@ export default function Register() {
     }
 
     return (
-        <div className="w-full h-[100vh] flex justify-center items-center">
+        <div className="w-full h-[100vh] sm:bg-gray-200 bg-white flex flex-col gap-4 justify-center items-center absolute text-gray-950">
+
+            <h1 className="text-5xl text-center font-bold">Account Registration</h1>
 
             {!registrationComplete ?
-                <form className="bg-gray-50 shadow-md border border-gray-300 rounded p-8 flex flex-col gap-4" onSubmit={e => { e.preventDefault(); handleSubmit(); }}>
-
-                    <h1 className="text-3xl text-center">Register</h1>
+                <form className="max-w-[512px] mx-auto bg-white sm:shadow-md rounded p-8 flex flex-col gap-4 w-full justify-center" onSubmit={e => { e.preventDefault(); handleSubmit(); }}>
 
                     <label>
                         <div>
                             Email
                         </div>
-                        <input maxLength={80} required type="email" placeholder="email@email.com" className="bg-gray-200 text-gray-900 p-2 rounded w-full" value={email} onChange={e => setEmail(e.target.value)} />
+                        <input maxLength={80} required type="email" placeholder="email@email.com" className="bg-gray-200 text-gray-950 p-2 rounded w-full" value={email} onChange={e => setEmail(e.target.value)} />
                     </label>
                     <label>
                         <div>
                             Password
                         </div>
-                        <input maxLength={80} required type="password" placeholder="password" className="bg-gray-200 text-gray-900 rounded p-2 w-full" value={password} onChange={e => setPassword(e.target.value)} />
+                        <input maxLength={80} required type="password" placeholder="password" className="bg-gray-200 text-gray-950 rounded p-2 w-full" value={password} onChange={e => setPassword(e.target.value)} />
                     </label>
                     <label>
                         <div>
                             First Name
                         </div>
-                        <input maxLength={80} required type="text" placeholder="First name" className="bg-gray-200 text-gray-900 rounded p-2 w-full" value={firstName} onChange={e => setFirstName(e.target.value)} />
+                        <input maxLength={80} required type="text" placeholder="First name" className="bg-gray-200 text-gray-950 rounded p-2 w-full" value={firstName} onChange={e => setFirstName(e.target.value)} />
                     </label>
                     <label>
                         <div>
                             Last Name
                         </div>
-                        <input maxLength={80} required type="text" placeholder="Last name" className="bg-gray-200 text-gray-900 rounded p-2 w-full" value={lastName} onChange={e => setLastName(e.target.value)} />
+                        <input maxLength={80} required type="text" placeholder="Last name" className="bg-gray-200 text-gray-950 rounded p-2 w-full" value={lastName} onChange={e => setLastName(e.target.value)} />
                     </label>
 
-                    <button type="submit" className="cursor-pointer rounded bg-blue-600 text-green-50 p-2 hover:bg-blue-500 transition">Register</button>
+                    <button type="submit" className="cursor-pointer w-full sm:w-[256px] mx-auto rounded bg-green-800 text-green-50 p-2 hover:bg-green-700 mt-4 transition">Register</button>
 
                     {error &&
-                        <div className="text-red-800">{error}</div>
+                        <div className="w-full text-center text-red-600">{error}</div>
                     }
 
-                    <div>
-                        <span>Already have an account?</span>
-                        <Link href={'/login'} className="ml-2 font-bold cursor-pointer">Login</Link>
-                    </div>
+                    <div className="flex flex-col justify-center items-center gap-4 text-gray-600">
+                        <div>
+                            <span>Already have an account?</span>
+                            <Link href={'/login'} className="ml-2 font-bold cursor-pointer hover:text-gray-950">Login</Link>
+                        </div>
 
-                    <SignInWithGoogleButton onClick={handleSignInWithGoogle} text={"Sign up with Google"} />
+                        Or
+
+                        <SignInWithGoogleButton onClick={handleSignInWithGoogle} text={"Sign up with Google"} />
+                    </div>
                 </form>
                 :
                 <PleaseVerifyEmail handleGoToLogin={() => router.replace('/login')} error={error} />

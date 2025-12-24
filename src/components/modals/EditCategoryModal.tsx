@@ -42,18 +42,18 @@ export const EditCategoryModal = ({ closeModal, handleUpdateCategory, category }
 
     return (
         <Modal title="Edit Category" closeModal={closeModal}>
-            <form className="flex flex-col gap-4 text-gray-600 justify-between h-full" onSubmit={e => { e.preventDefault(); handleEditCategory() }}>
+            <form className="flex flex-col gap-4 text-gray-950 justify-between h-full" onSubmit={e => { e.preventDefault(); handleEditCategory() }}>
 
                 <div className="flex flex-col gap-2">
 
                     <label className="flex flex-col">
                         Name
-                        <input required maxLength={80} type="text" placeholder="Product Name" className="rounded bg-gray-200 py-2 px-4" value={name} onChange={(e) => setName(e.target.value)} />
+                        <input required maxLength={80} type="text" placeholder="Product Name" className="rounded bg-gray-200 py-2 px-4 w-full" value={name} onChange={(e) => setName(e.target.value)} />
                     </label>
 
                     <label className="flex flex-col">
                         Description
-                        <textarea required maxLength={80} rows={6} placeholder="Category description" className="rounded bg-gray-200 py-2 px-4 resize-none" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <textarea required maxLength={80} rows={6} placeholder="Category description" className="rounded bg-gray-200 py-2 px-4 resize-none w-full" value={description} onChange={(e) => setDescription(e.target.value)} />
                     </label>
                 </div>
 
@@ -61,18 +61,18 @@ export const EditCategoryModal = ({ closeModal, handleUpdateCategory, category }
                     <div className="text-red-600">{error}</div>
                 }
 
-                <div className="flex justify-end gap-4">
-                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-400 hover:text-gray-700 cursor-pointer transition" onClick={closeModal}>
+                <div className="flex justify-end gap-4 mt-4 sm:flex-row flex-col">
+                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-200 cursor-pointer transition" onClick={closeModal}>
                         Cancel
                     </button>
 
-                    <button type="submit" disabled={isLoading} className="bg-green-300 p-2 rounded hover:bg-green-400 hover:text-gray-700 cursor-pointer inline-flex gap-2 items-center">
+                    <button type="submit" className="bg-green-800 text-green-50 p-2 rounded hover:bg-green-700 cursor-pointer inline-flex gap-2 items-center transition" disabled={isLoading}>
                         {isLoading &&
-                            <div className=" size-5 animate-spin
+                            <div className="min-w-4 min-h-4 animate-spin
                          border-l-2 border-b-2 border-r-2 border-r-green-50 border-t-green-50 border-t-2
-                          rounded-full border-l-green-300 border-t-green-50 border-b-green-300/50"></div>
+                          rounded-full border-l-green-300/50 border-t-green-50 border-b-green-300/50"></div>
                         }
-                        Save
+                        <span className="w-full">Save</span>
                     </button>
 
                 </div>

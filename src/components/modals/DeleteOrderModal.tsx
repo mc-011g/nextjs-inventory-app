@@ -38,7 +38,7 @@ export const DeleteOrderModal = ({ closeModal, handleRemoveOrder, orderId }: { o
 
     return (
         <Modal title="Delete Order" closeModal={closeModal}>
-            <form className="flex flex-col gap-4 text-gray-600 justify-between h-full" onSubmit={e => { e.preventDefault(); handleDeleteOrder() }}>
+            <form className="flex flex-col gap-4 text-gray-950 justify-between h-full" onSubmit={e => { e.preventDefault(); handleDeleteOrder() }}>
 
                 <p>Are you sure you want to delete order <span className="font-bold">{orderId}?</span></p>
 
@@ -46,21 +46,21 @@ export const DeleteOrderModal = ({ closeModal, handleRemoveOrder, orderId }: { o
                     <div className="text-red-600">{error}</div>
                 }
 
-                <div className="flex justify-end gap-4">
-                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-400 hover:text-gray-700 cursor-pointer" onClick={closeModal}>
+                <div className="flex justify-end gap-4 sm:flex-row flex-col">
+                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-200 cursor-pointer transition" onClick={closeModal}>
                         Cancel
                     </button>
 
-                    <button type="submit" className="bg-red-300 p-2 rounded hover:bg-red-400 hover:text-gray-700 cursor-pointer inline-flex gap-2 items-center">
+                    <button type="submit" disabled={isLoading} className="bg-red-800 p-2 rounded hover:bg-red-700 text-red-50 cursor-pointer inline-flex gap-2 items-center transition">
                         {isLoading &&
-                            <div className=" size-5 animate-spin
+                            <div className="min-w-4 min-h-4 animate-spin
                          border-l-2 border-b-2 border-r-2 border-r-red-50 border-t-red-50 border-t-2
-                          rounded-full border-l-red-300 border-t-red-50 border-b-red-300/50"></div>
+                          rounded-full border-l-red-300/50 border-t-red-50 border-b-red-300/50"></div>
                         }
-                        Delete
+                        <span className="w-full">Delete</span>
                     </button>
-
                 </div>
+
             </form>
         </Modal>
     )

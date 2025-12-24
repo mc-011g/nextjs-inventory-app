@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { Modal } from "./Modal"
 import { createOrderUtil } from "@/util/orders/createOrderUtil";
 import { Order, OrderItem, Product } from "@/types";
-import Image from "next/image";
 import { ToastContext } from "@/app/context/ToastContext";
 import { AuthContext } from "../FirebaseAuthProvider";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 
 export const CreateOrderModal = ({ closeModal, handleAddNewOrder, products }:
     { products: Product[], closeModal: () => void, handleAddNewOrder: (value: Order) => void }) => {
@@ -94,30 +94,30 @@ export const CreateOrderModal = ({ closeModal, handleAddNewOrder, products }:
 
     return (
         <Modal title="Create Order" closeModal={closeModal}>
-            <form className="flex flex-col gap-4 text-gray-600 justify-between h-full" onSubmit={e => { e.preventDefault(); handleCreateOrder() }}>
+            <form className="flex flex-col gap-4 text-gray-950 justify-between h-full pr-6" onSubmit={e => { e.preventDefault(); handleCreateOrder() }}>
 
                 <div className="flex flex-col gap-4">
                     <span className="font-bold mt-4">Customer Information</span>
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-2 p-4 border rounded border-gray-400">
                         <label className="flex flex-col">
                             Full Name
-                            <input required maxLength={80} type="text" placeholder="Firstname Lastname" className="rounded bg-gray-200 py-2 px-4" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
+                            <input required maxLength={80} type="text" placeholder="Firstname Lastname" className="rounded bg-gray-200 py-2 px-4 w-full" value={customerName} onChange={(e) => setCustomerName(e.target.value)} />
                         </label>
 
                         <label className="flex flex-col">
                             Email
-                            <input required maxLength={80} type="email" placeholder="email@email.com" className="rounded bg-gray-200 py-2 px-4" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
+                            <input required maxLength={80} type="email" placeholder="email@email.com" className="rounded bg-gray-200 py-2 px-4 w-full" value={customerEmail} onChange={(e) => setCustomerEmail(e.target.value)} />
                         </label>
 
                         <label className="flex flex-col">
                             Phone
-                            <input required maxLength={10} type="tel" placeholder="123-4567-8999" className="rounded bg-gray-200 py-2 px-4" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
+                            <input required maxLength={13} type="tel" placeholder="123-4567-8999" className="rounded bg-gray-200 py-2 px-4 w-full" value={customerPhone} onChange={(e) => setCustomerPhone(e.target.value)} />
                         </label>
 
                         <label className="flex flex-col">
                             Street Address
-                            <input required maxLength={80} type="text" placeholder="123 Ave. SW" className="rounded bg-gray-200 py-2 px-4" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} />
+                            <input required maxLength={80} type="text" placeholder="123 Ave. SW" className="rounded bg-gray-200 py-2 px-4 w-full" value={customerAddress} onChange={(e) => setCustomerAddress(e.target.value)} />
                         </label>
                     </div>
                 </div>
@@ -132,8 +132,8 @@ export const CreateOrderModal = ({ closeModal, handleAddNewOrder, products }:
                             <ul className="flex flex-col gap-1 mt-2">
                                 {products.map(product => product._id &&
                                     <li key={product._id} className="inline-flex gap-2">
-                                        <input type="checkbox" onChange={() => handleUpdateOrderProductList(product)} />
-                                        {product.name}
+                                        <input type="checkbox" id={`productCheckbox${product._id}`} onChange={() => handleUpdateOrderProductList(product)} />
+                                        <label htmlFor={`productCheckbox${product._id}`}>{product.name}</label>
                                     </li>
                                 )}
                             </ul>
@@ -141,20 +141,22 @@ export const CreateOrderModal = ({ closeModal, handleAddNewOrder, products }:
 
                         <hr className="text-gray-400" />
 
-                        Order Items
+                        <span className="font-bold">Order Items</span>
                         <ul className="flex flex-col gap-2">
                             {orderItems?.map(orderItem =>
-                                <li key={orderItem.id} className="flex flex-row gap-2">
-                                    <Image alt={orderItem.name} src={orderItem.imageLink || "placeholder.png"} className="bg-gray-300 p-2" width={64} height={64} />
+                                <li key={orderItem.id} className="flex flex-row gap-2 bg-gray-200 p-2 rounded">
 
-                                    <div className="flex flex-col">
+                                    <PhotoIcon className="min-w-10 min-h-10 size-10" />
+
+                                    <div className="flex flex-col gap-1 flex-1">
                                         <span className="">{orderItem.name}</span>
-                                        <label>
+                                        <label className="flex flex-col sm:flex-row w-full">
                                             Qty:
-                                            <input type="number" required min={0} max={1000} className="ml-2 rounded bg-gray-200 p-2" value={orderItem.quantityOrdered} onChange={e => setOrderItems(orderItems.map(item => item.id === orderItem.id ? { ...item, quantityOrdered: Number(e.target.value) } : item))} />
+                                            <input type="number" required min={0} max={1000} className="sm:ml-2 rounded bg-white border-1 border-gray-300 p-2 w-full" value={orderItem.quantityOrdered} onChange={e => setOrderItems(orderItems.map(item => item.id === orderItem.id ? { ...item, quantityOrdered: Number(e.target.value) } : item))} />
                                         </label>
                                     </div>
-                                    <div>${new Intl.NumberFormat().format(orderItem.quantityOrdered * orderItem.price)}</div>
+
+                                    <div className="flex-1 text-end">${new Intl.NumberFormat().format(orderItem.quantityOrdered * orderItem.price)}</div>
                                 </li>
                             )}
                         </ul>
@@ -163,7 +165,7 @@ export const CreateOrderModal = ({ closeModal, handleAddNewOrder, products }:
                     </div>
 
                     <label className="flex flex-col">
-                        <span className="text-gray-500">Notes (optional)</span>
+                        <span className="text-gray-800">Notes (optional)</span>
                         <textarea maxLength={200} rows={4} placeholder="Notes" className="rounded bg-gray-200 py-2 px-4 resize-none" value={notes} onChange={(e) => setNotes(e.target.value)} />
                     </label>
                 </div>
@@ -172,18 +174,18 @@ export const CreateOrderModal = ({ closeModal, handleAddNewOrder, products }:
                     <div className="text-red-600">{error}</div>
                 }
 
-                <div className="flex justify-end gap-4">
-                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-400 hover:text-gray-700 cursor-pointer" onClick={closeModal}>
+                <div className="flex justify-end gap-4 sm:flex-row flex-col mt-4">
+                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-200 text-gray-950 cursor-pointer transition" onClick={closeModal}>
                         Cancel
                     </button>
 
-                    <button type="submit" className="bg-green-300 p-2 rounded hover:bg-green-400 hover:text-gray-700 cursor-pointer inline-flex gap-2 items-center">
+                    <button type="submit" className="bg-green-800 text-green-50 p-2 rounded hover:bg-green-400 hover:bg-green-700 cursor-pointer inline-flex gap-2 items-center transition" disabled={isLoading}>
                         {isLoading &&
-                            <div className=" size-5 animate-spin
+                            <div className="min-w-4 min-h-4 animate-spin
                          border-l-2 border-b-2 border-r-2 border-r-green-50 border-t-green-50 border-t-2
-                          rounded-full border-l-green-300 border-t-green-50 border-b-green-300/50"></div>
+                          rounded-full border-l-green-300/50 border-t-green-50 border-b-green-300/50"></div>
                         }
-                        Create
+                        <span className="w-full">Create</span>
                     </button>
                 </div>
             </form>

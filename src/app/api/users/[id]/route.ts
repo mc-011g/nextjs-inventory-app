@@ -6,9 +6,11 @@ import { getVerifiedUserIdTokenUtil } from "@/util/getVerifiedUserIdTokenUtil";
 export const GET = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
     const { uid } = verifiedUserIdToken;
     const { id } = await params;
 
@@ -26,9 +28,11 @@ export const GET = async (request: NextRequest, { params }: { params: Promise<{ 
 export const PATCH = async (request: NextRequest, { params }: { params: Promise<{ id: string }> }) => {
 
     const verifiedUserIdToken = await getVerifiedUserIdTokenUtil(request);
+
     if (!verifiedUserIdToken) {
         return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+    
     const { uid } = verifiedUserIdToken;
     const { id } = await params;
 

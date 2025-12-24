@@ -12,15 +12,15 @@ export const Toast = ({ message, type }: { message: string, type: string }) => {
     return (
         <div className={`
            ${type === "success" &&
-            'bg-green-600 text-green-50'
+            'bg-green-800 text-green-50'
             }
            
             ${type === "error" &&
-            'bg-red-600 text-red-50'
+            'bg-red-800 text-red-50'
             }
            
             ${type === "warning" &&
-            'bg-yellow-600 text-yellow-50'
+            'bg-yellow-800 text-yellow-50'
             }
             
             ${type === "info" &&
@@ -54,7 +54,7 @@ export const Toast = ({ message, type }: { message: string, type: string }) => {
                 {message}
             </div>
 
-            <button className="hover:cursor-pointer" onClick={() => handleClose()}>
+            <button type="button" className="hover:cursor-pointer" onClick={() => handleClose()}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`size-6  ${type === "info" ? "text-gray-800/50" : "text-gray-50/60"} `}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                 </svg>

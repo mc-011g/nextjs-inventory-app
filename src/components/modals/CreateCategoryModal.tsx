@@ -29,7 +29,7 @@ export const CreateCategoryModal = ({ closeModal, handleAddNewCategory }: { clos
         try {
             const userIdToken = await user.getIdToken();
             const newCategory = await createCategoryUtil(category, userIdToken);
-         
+
             handleAddNewCategory(newCategory);
             toastContext?.handleShowToast("success", "Created category.");
         } catch (error) {
@@ -42,16 +42,16 @@ export const CreateCategoryModal = ({ closeModal, handleAddNewCategory }: { clos
 
     return (
         <Modal title="Create Category" closeModal={closeModal}>
-            <form className="flex flex-col gap-4 text-gray-600 justify-between h-full" onSubmit={e => { e.preventDefault(); handleCreateCategory() }}>
+            <form className="flex flex-col gap-4 text-gray-950 justify-between h-full" onSubmit={e => { e.preventDefault(); handleCreateCategory() }}>
 
                 <div className="flex flex-col gap-2">
                     <label className="flex flex-col">
                         Name
-                        <input required maxLength={80} type="text" placeholder="Category name" className="rounded bg-gray-200 py-2 px-4" value={name} onChange={(e) => setName(e.target.value)} />
+                        <input required maxLength={80} type="text" placeholder="Category name" className="rounded bg-gray-200 py-2 px-4 w-full" value={name} onChange={(e) => setName(e.target.value)} />
                     </label>
                     <label className="flex flex-col">
                         Description
-                        <input required maxLength={80} type="text" placeholder="Category description" className="rounded bg-gray-200 py-2 px-4" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <input required maxLength={80} type="text" placeholder="Category description" className="rounded bg-gray-200 py-2 px-4 w-full" value={description} onChange={(e) => setDescription(e.target.value)} />
                     </label>
                 </div>
 
@@ -59,18 +59,20 @@ export const CreateCategoryModal = ({ closeModal, handleAddNewCategory }: { clos
                     <div className="text-red-600">{error}</div>
                 }
 
-                <div className="flex justify-end gap-4">
-                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-400 hover:text-gray-700 cursor-pointer" onClick={closeModal}>
+                <div className="flex justify-end gap-4 mt-4 flex-col sm:flex-row">
+                    <button type="button" className="bg-gray-300 p-2 rounded hover:bg-gray-200 text-gray-950 cursor-pointer transition" onClick={closeModal}>
                         Cancel
                     </button>
-                    <button type="submit" disabled={isLoading} className="bg-green-300 p-2 rounded hover:bg-green-400 hover:text-gray-700 cursor-pointer inline-flex gap-2 items-center">
+
+                    <button type="submit" disabled={isLoading} className="bg-green-800 p-2 rounded hover:bg-green-700 text-green-50 cursor-pointer inline-flex gap-2 items-center transition">
                         {isLoading &&
-                            <div className=" size-5 animate-spin
+                            <div className="min-w-4 min-h-4 animate-spin
                          border-l-2 border-b-2 border-r-2 border-r-green-50 border-t-green-50 border-t-2
-                          rounded-full border-l-green-300 border-t-green-50 border-b-green-300/50"></div>
+                          rounded-full border-l-green-300/50 border-t-green-50 border-b-green-300/50"></div>
                         }
-                        Create
+                        <span className="w-full">Create</span>
                     </button>
+
                 </div>
             </form>
         </Modal>

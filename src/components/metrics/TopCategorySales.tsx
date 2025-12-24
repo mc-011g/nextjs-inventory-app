@@ -7,11 +7,11 @@ export const TopCategorySales = ({ topCategorySales }: { topCategorySales: TopCa
     const maxChartHeight = Math.ceil(largestSale * 0.2 + largestSale);
 
     return (
-        <div className={`${topCategorySales.length > 0 && 'pb-10'} bg-gray-200 p-3 rounded h-fit min-w-[320px] overflow-x-scroll`}>
-            <p className="text-gray-600 mb-4">Top Category Sales</p>
+        <div className={`${topCategorySales.length > 0 && 'pb-10'} col-span-2 sm:col-span-1 bg-white rounded h-full overflow-x-auto p-4 sm:p-6 border border-gray-300`}>
+            <p className="text-gray-950 mb-2">Top Category Sales</p>
 
             {topCategorySales?.length > 0 ?
-                <div className="flex flex-row gap-10 w-full" style={{ height: '350px' }}>
+                <div className="flex flex-row gap-10 w-full pt-4" style={{ height: '350px' }}>
                     <div className="flex flex-col mr-8">
 
                         <div className="h-[20%] w-[20%] relative">
@@ -60,9 +60,9 @@ export const TopCategorySales = ({ topCategorySales }: { topCategorySales: TopCa
                     {topCategorySales?.map((category, index) =>
                         <div key={category._id} className="flex flex-col justify-end relative">
                             <div
-                                className={`w-24
+                                className={`w-24 rounded-[4px]
                             ${index === 0 && 'bg-green-700'}
-                                ${index === 1 && 'bg-red-700'}
+                                ${index === 1 && 'bg-purple-700'}
                                        ${index === 2 && 'bg-blue-700'}
                                               ${index === 3 && 'bg-yellow-700'}
                                                      ${index === 4 && 'bg-orange-700'}
@@ -74,7 +74,7 @@ export const TopCategorySales = ({ topCategorySales }: { topCategorySales: TopCa
                     )}
                 </div>
                 :
-                <p className="text-3xl mt-2 text-gray-800 font-bold">None</p>
+                <p className="text-4xl mt-2 text-gray-800 font-bold">None</p>
             }
         </div>
     )

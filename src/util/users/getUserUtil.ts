@@ -2,7 +2,6 @@ import { baseURLUtil } from "../baseURLUtil";
 
 export const getUserUtil = async (id: string, userIdToken: string) => {
 
-
     const response = await fetch(`${baseURLUtil}/api/users/${id}`, {
         method: 'GET',
         headers: {

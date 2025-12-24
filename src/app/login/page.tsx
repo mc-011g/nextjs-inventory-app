@@ -20,7 +20,6 @@ export default function Login() {
     const authContext = useContext(AuthContext);
     const auth = authContext?.auth ?? null;
     const [showPleaseVerifyEmail, setShowPleaseVerifyEmail] = useState<boolean>(false);
-
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
     const toastContext = useContext(ToastContext);
@@ -28,7 +27,7 @@ export default function Login() {
     const handleSubmit = () => {
         if (auth) {
             signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {     
+                .then((userCredential) => {
 
                     if (!userCredential.user.emailVerified) {
                         handleSendVerifyEmail(userCredential.user);
@@ -38,8 +37,7 @@ export default function Login() {
                 })
                 .catch((error) => {
                     const errorMessage = error.message;
-                    setError(errorMessage);
-                    toastContext?.handleShowToast("error", "Failed to sign in.");
+                    setError(error.code === "auth/invalid-credential" ? "Invalid email or password." : "Error signing in.");
                 });
         }
     }
@@ -52,7 +50,6 @@ export default function Login() {
                 toastContext?.handleShowToast("info", "Email verification link sent.")
             } catch (error) {
                 setError((error as FirebaseAuthError).message ?? "Failed to send verify email. Please try logging in again to re-send it.");
-                toastContext?.handleShowToast("error", "Failed to send verify email.");
             }
         }
         sendVerifyEmailFunction();
@@ -74,48 +71,51 @@ export default function Login() {
                     }
                     createUser();
                     router.push('/');
-
                 }).catch((error) => {
                     const errorMessage = error.message;
-                    setError(errorMessage);
+                       setError(error.code === "auth/invalid-credential" ? "Invalid email or password." : "Error signing in.");
                 });
         }
     }
 
     return (
-        <div className="w-full h-[100vh] flex justify-center items-center">
+        <div className="w-full h-[100vh] bg-white sm:bg-gray-200 flex flex-col gap-4 justify-center items-center absolute text-gray-950">
+
+            <h1 className="text-5xl text-center font-bold">Login</h1>
 
             {!showPleaseVerifyEmail ?
-                <form className="bg-gray-50 shadow-md border border-gray-300 rounded p-8 flex flex-col gap-4" onSubmit={e => { e.preventDefault(); handleSubmit(); }}>
-
-                    <h1 className="text-3xl text-center">Login</h1>
+                <form className="max-w-[512px] mx-auto bg-white sm:shadow-md rounded p-8 flex flex-col gap-4 w-full justify-center" onSubmit={e => { e.preventDefault(); handleSubmit(); }}>
 
                     <label>
                         <div>
                             Email
                         </div>
-                        <input type="email" maxLength={80} required placeholder="email@email.com" className="bg-gray-200 text-gray-900 p-2 rounded w-full" value={email} onChange={e => setEmail(e.target.value)} />
+                        <input type="email" maxLength={80} required placeholder="email@email.com" className="bg-gray-200 text-gray-950 p-2 rounded w-full" value={email} onChange={e => setEmail(e.target.value)} />
                     </label>
 
                     <label>
                         <div>
                             Password
                         </div>
-                        <input type="password" maxLength={80} required placeholder="password" className="bg-gray-200 text-gray-900 rounded p-2 w-full" value={password} onChange={e => setPassword(e.target.value)} />
+                        <input type="password" maxLength={80} required placeholder="password" className="bg-gray-200 text-gray-950 p-2 rounded w-full" value={password} onChange={e => setPassword(e.target.value)} />
                     </label>
 
-                    <button type="submit" className="cursor-pointer rounded bg-blue-600 text-green-50 p-2 hover:bg-blue-500 transition">Login</button>
+                    <button type="submit" className="cursor-pointer w-full sm:w-[256px] mx-auto rounded bg-green-800 text-green-50 p-2 hover:bg-green-700 mt-4 transition">Login</button>
 
                     {error &&
-                        <div>{error}</div>
+                        <div className="w-full text-center text-red-600">{error}</div>
                     }
 
-                    <div>
-                        <span>Don&apos;t have an account?</span>
-                        <Link href={'/register'} className="ml-2 font-bold cursor-pointer">Register</Link>
-                    </div>
+                    <div className="flex flex-col justify-center items-center gap-4 text-gray-600">
+                        <div>
+                            <span>Don&apos;t have an account?</span>
+                            <Link href={'/register'} className="ml-2 font-bold cursor-pointer hover:text-gray-950">Register</Link>
+                        </div>
 
-                    <SignInWithGoogleButton onClick={handleSignInWithGoogle} text={"Sign in with Google"} />
+                        Or
+
+                        <SignInWithGoogleButton onClick={handleSignInWithGoogle} text={"Sign in with Google"} />
+                    </div>
                 </form>
                 :
                 <PleaseVerifyEmail handleGoToLogin={() => setShowPleaseVerifyEmail(false)} error={error} />
